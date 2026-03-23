@@ -82,58 +82,71 @@ rover-pathfinding/
 ├── grid.py
 ├── search.py
 └── README.md
-File Responsibilities
-main.py
-Coordinates the execution of the program.
-grid.py
-Handles grid generation, terrain definitions, valid movements, start/end discovery, path printing, and terrain costs.
-search.py
-Contains the pathfinding algorithms (bfs and dijkstra).
-How It Works
-A random grid is generated.
-The program finds the start and end positions.
-A search algorithm is executed.
-The resulting path is reconstructed.
-The final grid is printed with the path marked.
-The program displays metrics such as:
-number of explored nodes
-total path cost
-Example Output
+
+## File Responsibilities
+
+- **`main.py`**  
+  Coordinates the execution of the program.
+
+- **`grid.py`**  
+  Handles grid generation, terrain definitions, valid movements, start/end discovery, path printing, and terrain costs.
+
+- **`search.py`**  
+  Contains the pathfinding algorithms (`bfs` and `dijkstra`).
+
+## How It Works
+
+1. A random grid is generated.
+2. The program finds the start and end positions.
+3. A search algorithm is executed.
+4. The resulting path is reconstructed.
+5. The final grid is printed with the path marked.
+6. The program displays metrics such as:
+   - number of explored nodes
+   - total path cost
+
+## Example Output
 
 A possible output may look like this:
 
+```text
 - - - S * * * ~ ~ -
 ~ # - ^ ~ ~ * # - -
 - - ^ ^ ^ ~ * ~ - -
 - # # - ~ ~ * ^ ^ -
 - - - - - ^ * * * E
-Learning Goals
+
+## Learning Goals
 
 This project was designed to practice:
 
-graph traversal on a grid
-BFS and Dijkstra
-path reconstruction using parent dictionaries
-priority queues with heapq
-clean separation between map logic and search logic
-comparing shortest path vs lowest-cost path
-Possible Improvements
+- graph traversal on a grid
+- BFS and Dijkstra
+- path reconstruction using parent dictionaries
+- priority queues with `heapq`
+- clean separation between map logic and search logic
+- comparing shortest path vs lowest-cost path
+
+## Possible Improvements
 
 Future extensions could include:
 
-A* search
-loading maps from files
-deterministic test maps instead of random generation
-graphical visualization
-statistics and comparison tables between algorithms
-additional terrain types
-energy constraints for the rover
-How to Run
+- A* search
+- loading maps from files
+- deterministic test maps instead of random generation
+- graphical visualization
+- statistics and comparison tables between algorithms
+- additional terrain types
+- energy constraints for the rover
+
+## How to Run
 
 Run the main file with Python:
 
+```bash
 python3 main.py
-Notes
+
+## Notes
 
 This project uses a grid abstraction inspired by rover navigation problems.
 Although simplified, it reflects an important idea from autonomous systems: the shortest route is not always the best one if different terrains imply different traversal costs.
