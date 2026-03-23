@@ -83,3 +83,101 @@ def get_value(grid, i, j):
         return 3
     elif grid[i][j] == ROCK:
         return 5
+    
+def build_manual_grid(case_name: str) -> list[list[int]]:
+    if case_name == "simple":
+        return [
+            [FREE, FREE, START, FREE, FREE],
+            [FREE, FREE, FREE, FREE, FREE],
+            [FREE, FREE, FREE, FREE, FREE],
+            [FREE, FREE, FREE, FREE, FREE],
+            [FREE, FREE, END, FREE, FREE],
+        ]
+
+    elif case_name == "detour":
+        return [
+            [FREE, FREE, START, FREE, FREE],
+            [FREE, OBSTACLE, OBSTACLE, OBSTACLE, FREE],
+            [FREE, FREE, FREE, OBSTACLE, FREE],
+            [FREE, OBSTACLE, FREE, FREE, FREE],
+            [FREE, FREE, END, OBSTACLE, FREE],
+        ]
+
+    elif case_name == "no_path":
+        return [
+            [FREE, FREE, START, FREE, FREE],
+            [OBSTACLE, OBSTACLE, OBSTACLE, OBSTACLE, OBSTACLE],
+            [FREE, FREE, FREE, FREE, FREE],
+            [FREE, OBSTACLE, FREE, OBSTACLE, FREE],
+            [FREE, FREE, END, FREE, FREE],
+        ]
+
+    elif case_name == "weighted":
+        return [
+            [FREE, FREE, FREE, START, FREE, FREE, FREE],
+            [OBSTACLE, OBSTACLE, FREE, SAND, FREE, OBSTACLE, OBSTACLE],
+            [FREE, FREE, FREE, SAND, FREE, FREE, FREE],
+            [FREE, OBSTACLE, OBSTACLE, SAND, OBSTACLE, OBSTACLE, FREE],
+            [FREE, OBSTACLE, OBSTACLE, SAND, OBSTACLE, OBSTACLE, FREE],
+            [FREE, FREE, FREE, SAND, FREE, FREE, FREE],
+            [FREE, FREE, FREE, END, FREE, FREE, FREE],
+        ]
+    
+    elif case_name == "huge":
+        rows = 60
+        cols = 60
+        grid = [[FREE for _ in range(cols)] for _ in range(rows)]
+
+        # Start and end
+        grid[0][5] = START
+        grid[rows - 1][cols - 6] = END
+
+        # Vertical sand corridor near the center
+        for i in range(1, rows - 1):
+            grid[i][cols // 2] = SAND
+
+        # Horizontal rock bands with small gaps
+        for r in range(8, rows - 8, 8):
+            for c in range(cols):
+                grid[r][c] = ROCK
+            gap = (r * 7) % (cols - 10) + 5
+            for k in range(gap, min(gap + 4, cols)):
+                grid[r][k] = FREE
+
+        # Obstacle blocks to force detours
+        for r in range(10, rows - 10, 12):
+            for c in range(10, cols - 10):
+                if c % 9 not in (0, 1, 2):
+                    grid[r][c] = OBSTACLE
+
+        # Keep a left corridor mostly cheap
+        for r in range(rows):
+            for c in range(0, 4):
+                if grid[r][c] != START and grid[r][c] != END:
+                    grid[r][c] = FREE
+
+        # Keep a bottom corridor mostly cheap
+        for c in range(cols):
+            if grid[rows - 2][c] != END:
+                grid[rows - 2][c] = FREE
+
+        # Make sure start/end surroundings are open
+        for dr in range(0, 2):
+            for dc in range(-1, 2):
+                nr, nc = dr, 5 + dc
+                if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] != START:
+                    grid[nr][nc] = FREE
+
+        for dr in range(-1, 1):
+            for dc in range(-1, 2):
+                nr, nc = rows - 1 + dr, cols - 6 + dc
+                if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] != END:
+                    grid[nr][nc] = FREE
+
+        return grid
+
+    else:
+        raise ValueError(f"Unknown test case: {case_name}")
+
+def get_manual_case_names() -> list[str]:
+    return ["simple", "detour", "no_path", "weighted", 'huge']
