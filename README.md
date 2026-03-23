@@ -58,6 +58,7 @@ Breadth-First Search explores the grid level by level.
 It guarantees the path with the minimum number of steps when all moves are treated equally.
 
 In this project, BFS:
+
 - finds a valid path from start to end
 - minimizes the number of moves
 - does **not** optimize terrain cost
@@ -68,6 +69,7 @@ In this project, BFS:
 Dijkstra’s algorithm explores cells according to the minimum accumulated cost.
 
 In this project, Dijkstra:
+
 - finds a valid path from start to end
 - minimizes total traversal cost
 - takes terrain types into account
@@ -82,6 +84,7 @@ rover-pathfinding/
 ├── grid.py
 ├── search.py
 └── README.md
+```
 
 ## File Responsibilities
 
@@ -115,6 +118,7 @@ A possible output may look like this:
 - - ^ ^ ^ ~ * ~ - -
 - # # - ~ ~ * ^ ^ -
 - - - - - ^ * * * E
+```
 
 ## Learning Goals
 
@@ -145,8 +149,9 @@ Run the main file with Python:
 
 ```bash
 python3 main.py
+```
 
 ## Notes
 
-This project uses a grid abstraction inspired by rover navigation problems.
+This project uses a grid abstraction inspired by rover navigation problems.  
 Although simplified, it reflects an important idea from autonomous systems: the shortest route is not always the best one if different terrains imply different traversal costs.
